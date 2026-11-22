@@ -1,0 +1,8 @@
+Video_gioi_thieu/
+ViCare_Bootcamp24h.ipynb
+cache/
+chroma_db/
+__pycache__/
+*.log
+vicare_baseline.json
+vicare_comparison.json

@@ -1,6 +1,6 @@
 # [AI Challenge 24h] - ViCare: cải thiện truy xuất RAG
 
-Notebook: ViCare_Bootcamp24h_improved_FINAL.ipynb (chạy trên Colab T4, Ollama qwen2.5:3b)
+Notebook: ViCare_Bootcamp24h_IMPROVED.ipynb (chạy trên Colab T4, Ollama qwen2.5:3b)
 
 ## Cấu hình cải tiến (theo hướng BTC khuyến nghị)
 - Hướng 2: kết hợp BM25 (từ + bigram âm tiết tiếng Việt) với embedding multilingual-e5-base, gộp bằng RRF
@@ -44,7 +44,7 @@ Notebook: ViCare_Bootcamp24h_improved_FINAL.ipynb (chạy trên Colab T4, Ollama
 - Kiểm tra an toàn: 8/8 câu ngoài phạm vi y tế (giá vàng, nấu ăn, bóng đá, code, chứng khoán...) vẫn bị từ chối.
 - Cổng từ chối theo cosine (MIN_SCORE 0,86), dev, seed, cách chấm Judge và Recall đều giữ nguyên như BTC.
 - Lưu ý: Judge do LLM 3B chấm nên có thể lạc quan; mức tăng nhất quán ở cả hai nửa dev nhưng vẫn là số tham khảo.
-- File notebook mới nhất: ViCare_Bootcamp24h_improved_FINAL_v2.ipynb (SYSTEM_PROMPT = PROMPT_B được đặt ở cell cuối).
+- File notebook mới nhất: ViCare_Bootcamp24h_IMPROVED.ipynb (SYSTEM_PROMPT = PROMPT_B được đặt ở cell cuối).
 
 ## Thí nghiệm bổ sung: chunk size / overlap (hướng 1), hybrid e5-base + BM25 (+ rerank top-20), 100 câu dev
 | Chunk / overlap | Số chunk | Hybrid R@5 | Hybrid+rerank R@1 / R@3 / R@5 / R@10 |
@@ -67,7 +67,7 @@ Tốt nhất vẫn là hybrid e5-base + BM25, rerank thuần top-20 (R@1/3/5/10 
 | Baseline BTC (vector e5-small, prompt gốc) | 75,0% | 24,0% |
 | Cuối (hybrid e5-base+BM25, rerank top-20, prompt B) | 94,0% | 4,0% |
 Cùng với Recall@5 tăng từ 50% lên 64% (Recall@1/3/10: 36→48, 46→59, 54→67).
-Notebook mới nhất: ViCare_Bootcamp24h_improved_FINAL_v3.ipynb.
+Notebook mới nhất: ViCare_Bootcamp24h_IMPROVED.ipynb.
 
 ## Thí nghiệm dài: embedding mới và reranker thứ hai (hướng 2, 3), 100 câu dev
 - Embedding thử thêm: AITeamVN/Vietnamese_Embedding, Qwen/Qwen3-Embedding-0.6B. Qwen3-Embedding đứng riêng chỉ đạt R@1/3/5/10 = 37 / 46 / 50 / 54 (không hơn baseline).
@@ -96,7 +96,7 @@ Loss InfoNCE đối xứng, batch 32, lr 2e-5, 2 epoch (~4 phút trên T4), đó
 
 
 ## Kiểm chứng lại & đóng gói
-- Chạy lại toàn bộ `ViCare_Bootcamp24h_FINAL.ipynb` từ đầu trên Colab T4 (22/11/2026): Recall@1/3/5/10 = 36/46/50/54 → 48/59/64/67; Judge@100 75% → 94%; từ chối 25% → 4%. Số baseline ở trên đã cập nhật theo lần chạy này (các lần thử trước ghi 37/47/51/55 do dao động nhỏ giữa các lần chạy).
+- Chạy lại toàn bộ `ViCare_Bootcamp24h_IMPROVED.ipynb` từ đầu trên Colab T4 (22/11/2026): Recall@1/3/5/10 = 36/46/50/54 → 48/59/64/67; Judge@100 75% → 94%; từ chối 25% → 4%. Số baseline ở trên đã cập nhật theo lần chạy này (các lần thử trước ghi 37/47/51/55 do dao động nhỏ giữa các lần chạy).
 - Đóng gói theo gợi ý BTC: thư mục `vicare_package/` (`rag.py`, `api.py` FastAPI, `ui.py` Gradio, `README.md`). Hàm thuần đã kiểm thử; pipeline đóng gói chưa chạy end-to-end.
 - Lần chạy lại cuối (có thêm mục 12 kiểm thử gói đóng gói): Recall giống hệt (36/46/50/54 → 48/59/64/67); Judge@100 75% → 95%, từ chối 25% → 3% (lần trước 94%/4%: dao động nhẹ của LLM). Gói `vicare_package` đo trên 100 câu dev cho Recall@1/3/5/10 = 48/59/64/67 (khớp notebook), API `/ask` trả 200 và câu ngoài lĩnh vực bị từ chối đúng.
 - Đóng gói chạy thật trên Colab: `uvicorn api:app` (GET /health, POST /ask = 200) và `python ui.py` (Gradio, gọi qua gradio_client) đều trả lời đúng.

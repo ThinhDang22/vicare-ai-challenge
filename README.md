@@ -25,7 +25,7 @@ Recall giống hệt giữa các lần chạy; Judge dao động nhẹ (baseline
 - Đã thử nhưng không giúp thêm (chi tiết trong `KET_QUA_AI_Challenge.md`): đổi chunk size, thêm embedding/reranker khác, HyDE, rerank theo chunk, fine-tune embedding, LLM 7b.
 
 ## Cách chạy
-1. Mở `ViCare_Bootcamp24h_FINAL.ipynb` trên Google Colab, chọn Runtime **T4 GPU**.
+1. Mở `ViCare_Bootcamp24h_IMPROVED.ipynb` trên Google Colab, chọn Runtime **T4 GPU**.
 2. Bấm **Chạy tất cả** (khoảng 30 phút). Mục 6 và 8 lưu baseline, mục 8B chạy cải tiến, mục 11 in bảng so sánh, mục 12 kiểm thử gói đóng gói.
 3. Muốn bấm thử giao diện: chạy cell mục 9 (Gradio) và mở link `gradio.live`.
 
@@ -33,7 +33,7 @@ Chạy gói đóng gói riêng trên máy: xem [`vicare_package/README.md`](vica
 
 ## Cấu trúc
 ```
-ViCare_Bootcamp24h_FINAL.ipynb   # notebook: baseline BTC (mục 0–8) + cải tiến (8B) + so sánh (11) + đóng gói (12)
+ViCare_Bootcamp24h_IMPROVED.ipynb   # notebook: baseline BTC (mục 0–8) + cải tiến (8B) + so sánh (11) + đóng gói (12)
 vicare_package/                  # rag.py, api.py, ui.py, test_rag.py, requirements.txt, README.md
 KET_QUA_AI_Challenge.md          # báo cáo chi tiết, các thử nghiệm và ghi chú trung thực
 ```
